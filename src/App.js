@@ -1,29 +1,25 @@
-import './App.css';
+import React,{useEffect, useState} from 'react';
+import Tmdb from'./Tmdb';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
-  );
+export default()=>{
+    const[movieList,setMovieList]=useState([]);
+    useEffect(()=>{
+        const loadAll=async()=>{
+         let list=await Tmdb.getHomeList();
+         setMovieList(list);
+        }
+        loadAll();
+    },[])
+    return(
+        <div className='page'>
+            <section className='lists'>
+                {movieList.map((item,Key)=>(
+                 <div>
+                    {item.title}
+                 </div>
+                ))}
+                
+            </section>
+        </div>
+    );
 }
-
-export default App;
